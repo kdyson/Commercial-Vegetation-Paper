@@ -1,0 +1,4 @@
+book_filename: "vegch4publication"
+chapter_name: "Draft "
+rmd_files: ["index.Rmd"]
+new_session: yes
