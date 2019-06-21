@@ -2,7 +2,7 @@ bookdown::word_document2:
   fig_caption: yes
   toc: no
   pandoc_args: [
-      "--csl", "elsevier-harvard.csl"
+      "--csl", "vancouver.csl"
   ]
 bookdown::gitbook:
   css: style.css

@@ -1,9 +1,9 @@
 ---
-title: Development and landscaping choices differentiate heterogenous tree and shrub communities on office developments
+title: Heterogeneity within and between land uses\: commercial office vegetation is determined by development and landscaping decisions
 bibliography: ../../../bibliography.bib
 output: 
     word_document:
-        reference_docx: PeerJ-research-manuscript-template.docx
+        reference_docx: PeerJ_Preprint.docx
 always_allow_html: yes
 ---
 
@@ -15,10 +15,7 @@ knitr::opts_chunk$set(
     message = FALSE
     )
 #Woody vegetation communities on office developments are heterogenous and meaningfully influenced by development and landscaping choices
-
- # Required addt'l repositories for latex
-  # tinytex::tlmgr_install("setspace")
-
+#Development and landscaping choices differentiate heterogenous tree and shrub communities on office developments
 
 # This chapter .Rmd code relies on two sourced R codes:
 # 'vegetation_data_processing.R' and 'vegetation_data_analysis.R.' These do the
@@ -29,6 +26,7 @@ knitr::opts_chunk$set(
 
 
 ## Load sourced R codes
+## 
 all.current <- TRUE
 
 if (all.current == TRUE) {
@@ -61,8 +59,10 @@ if (all.current == FALSE) {
     levels(vegetation.clusters$tree.cluster.name) <- c("Native", "Ornamental")
     levels(vegetation.clusters$shrub.cluster.name) <- c("Ornamental", "Native")
     
-    population.covariates.subset <- population.covariates[ population.covariates$vegetation_class %in%
-                                                        c("HH", "MC", "MD", "MM", "LL"), ]
+    
+    population.covariates.subset <-
+    population.covariates[population.covariates$vegetation_class %in%
+    c("HH", "MC", "MD", "MM", "LL"),]
     
     
     PA.tree.sp.only <- matrify.tree.sp.only
@@ -78,59 +78,60 @@ if (all.current == FALSE) {
 
 In urban ecosystems, woody vegetation communities and the ecosystem functions and habitat they provide are largely controlled by humans. 
 These communities are assembled during development, landscaping, and maintenance processes according to decisions made by human actors.
-While vegetaiton communities on residential land uses are increasingly well studied, these efforts have generally not extended to other other land uses, including commercial land uses; we thus know little about the vegetation communities on these land uses and how they are assembled.
+While vegetation communities on residential land uses are increasingly well studied, these efforts generally have not extended to other other land uses, including commercialproperty.
 To fill this gap, I surveyed tree and shrub communities on office developments located in Redmond and Bellevue, Washington, USA, and explored whether aggregated and parcel scale socio-economic variables or variables describing the outcome of development and landscaping actions better explained variation in vegetation communities. 
-I found that both tree and shrub communities are heterogenous, with distinct groups of sites characterized by native or ornamental vegetation. 
-The outcome of _individual_ actors' decision making also explains more variation than aggregated or parcel scale socio-economic variables found significant on residential property. 
-The observed heterogeneity in vegetaiton communities suggests that different ecosystem functions and habitat quantity and quality are provided on office developments; better provision of these functions is possible using currently existing developments as models.
-Further, the heterogeneity and observed differences in variable importance between office developments and residential land uses suggests that future urban ecology research must more carefully consider sampling design and that models of the urban ecosystem must account for different decision pathways on land uses.
-Going forward, research should examine other commercial land uses, commercial land use in additional ecotypes, and decision pathways followed by actors on commercial land uses.
+I found that both tree and shrub communities on office developments are heterogenous, with sites characterized by native or ornamental vegetation. 
+The heterogeneity I observed in vegetation communities within one land use suggests that different ecosystem functions, habitat quality, and habitat quantities are provided on office developments. 
+Greater provision of e.g. native conifer habitat is possible using currently existing developments as models.
+Additionally, the outcome of development and landscaping decisions explained more variation than socio-economic factors found significant on residential property.
+Together with previous research showing that residential property owner attitudes and actions are more important than socio-economic descriptors, my results suggest that the intended audience of neighbors, tenants, etc. that the property owner considers important may influence both development and landscaping decisions, and thus urban vegetation communities.
+Future urban ecology research should consider sampling the vegetation gradient within land uses, and models of the urban ecosystems must account for divergent decision pathways on different land uses.
 
 
 # Introduction
 
-Perennial vegetation community composition, structure, and distribution are largely controlled by human actions in urban ecosystems [@faeth2011; @avolio2018; @pickett2008; @gibb2002; @mullaney2015; @peters2011; @sharpe1986]. 
-These changes to the vegetation community alter ecosystem service provision and habitat quality and quantity [@faeth2011; @byrne2007; @lehmann2014]. 
-Despite the need to understand these processes across cities, non-residential land uses have recieved little research attention.
+Woody vegetation community composition, structure, and distribution are largely controlled by human decisions and actions in urban ecosystems [@faeth2011; @avolio2018; @pickett2008; @gibb2002; @mullaney2015; @peters2011; @sharpe1986]. 
+Development, landscaping, and ongoing maintenance are important milestones for management decisions that determine vegetation community characteristics. 
+Changes to the vegetation community alter ecosystem service provision and habitat quality and quantity [@faeth2011; @byrne2007; @lehmann2014]. 
 
-Development, landscaping, and ongoing maintenance are important milestones for vegetation management decisions and points where landowner motivations and preferences determine vegetation community characteristics. 
 In the Puget Sound region, development has replaced fire as the primary disturbance driver and precursor to new forest stands [@gibb2002; @walcott1899; @sharpe1986; @halpern1995].
-The mechanisms of disturbance when clearing and grading land for development include removing vegetation, removing topsoil, and compacting soil with heavy equipment [Figure \@ref(fig:FIG-development-pic); @andres2004; @dorney1984; @mckinney2002; @grimm2017; @turner2005].
+The mechanisms of disturbance when clearing and grading land for development include removing vegetation, removing topsoil, and compacting soil with heavy equipment [Fig \@ref(fig:FIG-development-pic); @andres2004; @dorney1984; @mckinney2002; @grimm2017; @turner2005].
 Decisions made by developers and land owners at the time of development determine the extent of disturbance and influence future site conditions.
 For example, choosing to preserve existing trees determines legacy vegetation and influences stand characteristics like age and size [@dorney1984]. 
 
 
-```{r FIG-development-pic, fig.cap='Commercial development project located in Redmond, WA illustrating: a. clearing the site of vegetation and b. grading the site and digging foundation. Photo credit: K. Dyson.'}
+```{r FIG-development-pic, fig.cap='**Commercial development project located in Redmond, Washington**. Depicted: a. clearing the site of vegetation and b. grading the site and digging the foundation. Photo credit: K. Dyson.'}
 
-	knitr::include_graphics("../images/RedmondDevelopment_hor.jpg")
+	knitr::include_graphics("Figure1_DPI_300.tif")
 
 
 ```
 
 
-Vegetation succession in urban ecosystems is determined through ecological processes such as dispersal and regeneration from seedgbanks and through decisions during landscaping and ongoing maintenance [@zipperer2010process].
-However, the latter has become the dominant process with decisions made by developers and landowners [@grimm2017; @faeth2011; @widrlechner1990; @dorney1984; @vanheezik2014; @goodness2018; @kendal2012].
-Plants chosen for landscaping are often ornamental introduced shrubs, trees, or grasses, though using native species in landscaping is becoming more common [@vanheezik2014; @faeth2011; @germaine1998; @burghardt2009; @blair1996; @mckinney2002]. 
+Vegetation succession in urban ecosystems is determined through ecological processes such as dispersal and regeneration from seed banks and through landscaping and ongoing maintenance decisions made by developers and land owners [@zipperer2010process].
+The latter has become the dominant process [@grimm2017; @faeth2011; @widrlechner1990; @dorney1984; @vanheezik2014; @goodness2018; @kendal2012].
+Ornamental introduced shrubs, trees, or grasses are often chosen for landscaping, though using native species is becoming more common [@vanheezik2014; @faeth2011; @germaine1998; @burghardt2009; @blair1996; @mckinney2002]. 
 Once planted, these require significant ongoing maintenance inputs to arrest succession and maintain the desired aesthetic [@zipperer2010process; @faeth2011; @lebauer2008; @lepczyk2004]. 
 Along with trees retained through tree preservation policies, landscape plantings represent a significant portion of the vegetation on site and of the habitat quality and quantity available to other organisms [@faeth2011; @avolio2018].
 
-Drivers determining vegetation management decisions, actions, and outcomes are multi-scalar, and include policy, neighborhood scale social pressures, and the motivations and preferences of individual landowners [@cook2012]. 
-Relevant public policies include clearing and grading permitting processes, impervious surface maximums and minimums via parking space requirements, tree protection policies, canopy cover goals, and vegetation planting policies [@young2011; @EPA2011; @delaria2008]. These policies are frequently enacted to protect ecosystem services, including carbon sequestration and aesthetic benefits [@wolf2005; @collins2011; @elmendorf2008; @goodness2018; @conway2016; @dorney1984].
+Drivers determining vegetation management decisions, actions, and outcomes are multi-scalar, and include policy, community social pressures, and the motivations and preferences of individual landowners [@cook2012]. 
+Relevant public policies include clearing and grading permitting processes, impervious surface maximums and minimums via parking space requirements, tree protection policies, canopy cover goals, and vegetation planting policies [@young2011; @EPA2011; @delaria2008]. These policies are frequently enacted to protect ecosystem services, including carbon sequestration and aesthetic preferences [@wolf2005; @collins2011; @elmendorf2008; @goodness2018; @conway2016; @dorney1984].
 
-Neighborhood scale drivers include social norms and customs that influence individual behavior [@cook2012]. 
-On residential properties, homeowners alter preferences for their own yards in response to the choices of nearby neighbor's yards [@nassauer2009], though assumptions about neighborhood preference are not always accurate [@peterson2012]. 
-On commercial properties, owners may alter preferences based on prospective and existing tenants [@laverne2003; @levy2013].
+Community drivers include the social norms and customs that influence individual behavior [@cook2012]. 
+On residential properties, homeowners alter preferences for their own yards in response to the choices of nearby neighbor's yards [@nassauer2009], though their assumptions about neighbor preference are not always accurate [@peterson2012]. 
+On commercial properties, owners may alter preferences to appeal to prospective and existing tenants [@laverne2003; @levy2013].
 
-Individual scale drivers center on past and present decision maker's motivations and preferences.
-Developers for all land uses are often motivated by cost and investment decisions [@almagor2017]; mass construction paired with removing existing vegetation is purportedly cheaper, though preserving vegetation may be less expensive in the long run [@mckinney2002].
-
-Landowner socio-economic status is often important in studies of residential property.
-While these variables are aggregated to the neighborhood scale, they reflect group membership of the individual thought to serve as a proxy for commonly held attitudes and ability to manipulate their enviroment [@heynen2006].
+Individual drivers center on past and present decision maker's motivations and preferences. 
+Landowner socio-economic status is often an important predictor of vegetation communities in studies of residential property.
+While these variables are aggregated to the neighborhood scale and often referred to as neighborhood scale variables, they reflect group membership of the individual. 
+Group membership often serves as a proxy for commonly held attitudes and ability to manipulate their enviroment [@heynen2006], however they are also inextricably linked with systematic forces of inequality influecing the spatial distribution of wealth in a city [@schell2019].
 Socio-economic variables correlated with canopy cover and other vegetation metrics include: current and historic household income [@leong2018; @hope2003; @larsen2006; @boone2010; @krafft2016; @sierra2017; @clarke2013; @luck2009; @avolio2015; @heynen2006; @avolio2018], education level [@krafft2016; @luck2009; @kendal2012], ethnic composition [@luck2009; @grove2006data; @heynen2006; @leong2018], home value [@mills2016], home ownership [@heynen2006], and housing age [@jim1993; @sierra2017; @boone2010; @clarke2013; @avolio2018].
 However, researchers that disaggregate socio-economic characteristics find that individual attitudes may be more important than these aggregated measures that serve as a proxy  [@shakeel2014; @kendal2012].
 
-In municipal parks, education level and park age [@martin2004] were only occasionally important [@kendal2012]. These are thought to influence vegetation through neighborhood investment, advocacy, and legacy effects [@boone2010; @rigolon2018], which are less direct than decisions by homeowners on their private property. 
+In municipal parks, education level and park age were only occasionally important  [@martin2004; @kendal2012]. These aggregated measures are thought to influence vegetation through neighborhood investment, advocacy, and legacy effects [@boone2010; @rigolon2018; @schell2019]. 
 Individual scale drivers on other land uses are poorly studied.
+
+Additionally, developers for all land uses are often motivated by cost and investment decisions [@almagor2017]. Bulk construction paired with removing existing vegetation is purportedly cheaper, though preserving vegetation may be less expensive in the long run [@mckinney2002].
 
 These management decisions which create vegetation communities and patterns in cities also impact ecosystem function, food webs, and biodiversity [@faeth2011; @avolio2018; @faeth2005; @wittig2010; @mckinney2002; @dorney1984]. 
 Different tree and shrub species have different capacity for carbon sequestration [@tenneson2013; @tang2016].
@@ -140,46 +141,46 @@ For the urban matrix to support conservation, decision makers across land uses n
 
 While the drivers and outcomes of decision making are increasingly well studied on residential private property, other land uses have not been given the same attention [@snep2011; @bourne2013]. 
 For example, commercial and industrial land uses are generally included only as independent variables in remote sensing studies of factors influencing percent canopy cover [e.g. @fan2019; @mills2016]. 
-Research where the unit of analysis is defined by the area of influence of specific decision makers is also needed.
+Additionally, research where the unit of analysis is defined by the area of influence of specific decision makers is also needed.
 Aggregated measures, such as vegetation transects through neighborhoods or canopy cover of a census block, cannot examine specific decision outcomes as they conflate different actors and their motivations and actions, and previous research shows that motivations differ between actors [@kendal2012; @tenneson2013].
 
-To fill this gap, I examined vegetation community composition on office developments in Bellevue and Redmond, Washington, USA. 
-Specifically, I examined 1) tree and shrub communities present on office developments and 2) whether aggregated or parcel specific socio-economic variables or development and landscaping outcomes better explained observed variation in vegetation communities.
+To fill this gap, I examined woody vegetation community composition on office developments in Bellevue and Redmond, Washington, USA. 
+Specifically, I examined 1) tree and shrub communities present on office developments and 2) whether aggregated and parcel specific socio-economic variables or development and landscaping outcomes better explained observed variation in vegetation communities.
 
 I hypothesized that vegetation communities on office developments would be heterogeneous.
 I also hypothesized that aggregated socio-economic variables found significant in explaining vegetation patterns on residential property would not be significant on office developments [@avolio2018; @hope2003; @conway2016],
 but that parcel level variables would. 
 Finally, I hypothesized that the outcome of development and landscaping actions would better explain variation in tree and shrub community structure.
-I found that vegetation communities on office developments are variable with multiple community types, and that in contrast with residential property, development and landscaping actions explain this variability better than socio-economic variables. 
-The observed within land use variability has implications for how urban ecologists should approach sampling design
+I found that woody vegetation communities on office developments are hetergenous with distinct community types, and that in contrast with residential property, development and landscaping actions explain this variability better than socio-economic variables. 
 
 
-# Materials and Methods {#CH2-methods}
+
+# Materials and Methods
 
 ## Study area and site selection
 
 Redmond (2017 population 64,000) and Bellevue (population 144,000) are located east of Seattle in King County, Washington [@Census2017]. Both cities share a similar ecological history, a similar disturbance timeline for logging and agriculture, and have grown considerably since the opening of the Evergreen Point Floating Bridge (SR 520) in 1963. They are at similar elevations (< 160 m) and experience the same climate and weather. 
 
-```{r FIG-study-area-map, fig.cap='(ref:studyareacap)'}
+```{r FIG-study-area-map, fig.cap='(ref:studyareacap)', dpi=300}
 
-  knitr::include_graphics("sitemap.png")
+  knitr::include_graphics("Figure2_DPI_300.tif")
 
 
 ```
 
 (ref:studyareacap) Map of office development study sites in Redmond and Bellevue, Washington. The population of office developments with High, Medium Canopy, Medium Diverse, Medium, and Low vegetation types are represented with dark gray circles; excluded sites (no vegetation/LP, wetlands/WW, and under construction/XX) are represented with light gray circles. Sampled sites are shown with orange circles.
 
-The sampling frame was limited to Redmond and Bellevue north of I-90, excluded developments in Bellevue’s central business district, and contained parcels defined as office use by the King County Assessor's Office (Figure \@ref(fig:FIG-study-area-map)). 
+The sampling frame was limited to Redmond and Bellevue north of I-90, excluded developments in Bellevue’s central business district, and contained parcels defined as office use by the King County Assessor's Office (Fig \@ref(fig:FIG-study-area-map)). 
 I grouped adjacent parcels built within three years of one another and with the same owner to create a unit of analysis based on human action not cadastral boundaries.
 This initial population size was `r length(population.covariates$vegetation_class) ` developments.
 
 I used disproportionate stratified random sampling to ensure that my sample included sites across the entire vegetation gradient.
-I classified the vegetation at each potential study site into type categories using a brief visual estimation during site visits in early 2014 (Figure \@ref(fig:FIG-vegetation-types), Table \@ref(tab:TAB-vegclass)). Sites with no vegetation, with wetlands, or those that were currently under construction or undergoing landscape replanting were excluded from the analysis (`r sum(population.covariates$vegetation_class %in% c("WW", "XX", "LP")) ` sites). The remaining pool of `r sum(!(population.covariates$vegetation_class %in% c("WW", "XX", "LP")))` potential sites had no notable hydrological features on site.
+I classified the vegetation at each potential study site into type categories using a brief visual estimation during site visits in winter 2014 (Fig \@ref(fig:FIG-vegetation-types), Table \@ref(tab:TAB-vegclass)). Sites with no vegetation, with wetlands, or those that were currently under construction or undergoing landscape replanting were excluded from the analysis (total `r sum(population.covariates$vegetation_class %in% c("WW", "XX", "LP")) ` sites). The remaining pool of `r sum(!(population.covariates$vegetation_class %in% c("WW", "XX", "LP")))` potential sites had no notable hydrological features on site.
 
 
-```{r FIG-vegetation-types, fig.cap='(ref:vegetationtypes)'}
+```{r FIG-vegetation-types, fig.cap='(ref:vegetationtypes)', dpi=300}
 
-  knitr::include_graphics("../images/VegetationClasses.jpg")
+  knitr::include_graphics("Figure3_DPI_300.tif")
 
 
 ```
@@ -197,7 +198,8 @@ vegclasssum <- tibble(
 "Medium",
 "Low",
 "No Vegetation",
-"Wetlands"
+"Wetlands",
+"Under Construction"
 ),
 `Tree Cover` = c(
 "30% native tree cover",
@@ -206,7 +208,8 @@ vegclasssum <- tibble(
 "15% tree cover",
 "< 10% tree cover",
 "No trees",
-"No requirement"
+"No requirement",
+""
 ),
 `Shrub Richness` = c(
 "> 5 native shrub genera",
@@ -215,7 +218,8 @@ vegclasssum <- tibble(
 "> 5 shrub genera",
 "< 5 shrub genera",
 "No shrubs",
-"No requirement"
+"No requirement",
+""
 ),
 `Strata Size` = c(
 sum(population.covariates$vegetation_class == "HH"),
@@ -224,9 +228,11 @@ sum(population.covariates$vegetation_class == "MD"),
 sum(population.covariates$vegetation_class == "MM"),
 sum(population.covariates$vegetation_class == "LL"),
 sum(population.covariates$vegetation_class == "LP"),
-sum(population.covariates$vegetation_class == "WW")
+sum(population.covariates$vegetation_class == "WW"),
+sum(population.covariates$vegetation_class == "XX")
+
 ),
-`Sampled (n)` = c(5, 3, 4, 3, 5, 0, 0),
+`Sampled (n)` = c(5, 3, 4, 3, 5, 0, 0, 0),
 Notes = c(
 " ",
 " ",
@@ -234,41 +240,47 @@ Notes = c(
 " ",
 " ",
 "Excluded from further analysis",
-"Wetland present, excluded from further analysis"
+"Wetland present, excluded from further analysis",
+"Excluded from further analysis"
 )
 )
 
-knitr::kable(vegclasssum, caption = "Vegetation type assignment criteria and strata size. Sites without vegetation and those with wetlands present were excluded from further analysis.",
+knitr::kable(vegclasssum, caption = "**Vegetation type assignment criteria and strata size.**",
              format = "pandoc", escape = TRUE)
 
 
-#pander(vegclasssum)
-
 ```
 
-I conducted stratified random sampling on sites with High, Medium Canopy, Medium Diverse, Medium, and Low vegetation types. I restricted the sampling pool to sites in the 25^th^ to 85^th^ percentile of site area and the 15^th^ to 85^th^ percentile of surrounding impervious surfaces. These limits were imposed to avoid confounding factors and were based on the smallest strata.
+I conducted stratified random sampling on sites with High, Medium Canopy, Medium Diverse, Medium, and Low vegetation types.
+Site selection was restricted based on site area and surrounding impervious surfaces for concurrent studies [@dysonPhD].
 Limiting sampling of these extremes reduced my ability to detect community differences along these gradients, though socio-economic variables are not covariate.
 
-I requested property access through three mailings sent to the property owner or manager on file in the King County Assessor's database [@dyson2019]. I targeted vegetation categories underrepresented in my sample in the second and third mailings. Of 46 mailed requests, 20 (`r round(20/46 * 100, 1)`%) received no response or were not deliverable. Of the 26 (`r round(26/46 * 100, 1)`%) responses received, 6 (`r round(6/26*100, 1)`%) of were rejected and 20 (`r round(20/26*100, 1)`%) were accepted in writing by an individual with authority to do so  (Table \@ref(tab:TAB-vegclass)).
+I requested property access through three mailings sent to the property owner or manager on file in the King County Assessor's database [@dyson2019].
+I targeted vegetation categories underrepresented in my sample in the second and third mailings. Of 46 mailed requests, 20 (`r round(20/46 * 100, 1)`%) received no response or were not deliverable. 
+Of the 26 (`r round(26/46 * 100, 1)`%) responses received, 6 (`r round(6/26*100, 1)`%) of were rejected and 20 (`r round(20/26*100, 1)`%) were accepted in writing by an individual with authority to do so [@dyson2019].
 
-Commercial use of sample sites included light industrial, white collar office space, and medical/dental offices. Some sites were fully leased to tenants, while others were either partly or fully owner-occupied. Company size ranged from less than 10 to many thousand employees.
-
+Commercial use of sample sites included light industrial, white collar office space, and medical/dental offices. 
+Some sites were fully leased to tenants, while others were either partly or fully owner-occupied. 
+Company size ranged from less than 10 to many thousand employees.
 
 
 ## Independent variables
 
-Socio-economic variables were derived from existing databases [Table \@ref(tab:TAB-covariate-definitions); @ACS5yr; @taxDB; @KCDB; @xian2011; @homer2015]. Variables were chosen based on previous research and analyzed in QGIS 3.2 [@hope2003; @martin2004; @walker2009; @dana2002; @grove2014; @QGIS].
+Socio-economic variables were derived from existing databases [Table \@ref(tab:TAB-covariate-definitions); @ACS5yr; @taxDB; @KCDB; @xian2011; @homer2015].
+Variables were chosen based on previous research and analyzed in QGIS 3.2 [@hope2003; @martin2004; @walker2009; @dana2002; @grove2014; @QGIS].
 
-I measured the height of dominant native conifers with a Nikon Forestry Pro Laser Rangefinder; I used this as a proxy measure for age as I did not collect tree cores due to liability concerns [@dyson2019]. I used historical records and site construction plans to determine whether each site had a stand of three adjacent tree predating site development. I used _Pseudotsuga menziesii_ (Mirb.) Franco, _Thuja plicata_ Donn ex D. Don, and _Tsuga heterophylla_ (Raf.) Sarg. counts to calculate native conifer density. 
+I measured the height of dominant native conifers with a Nikon Forestry Pro Laser Rangefinder; this is a proxy measure for age as I did not collect tree cores due to liability concerns [@dyson2019].
+I used historical records and site construction plans to determine whether each site had a stand of three adjacent tree predating site development.
+I used _Pseudotsuga menziesii_ (Mirb.) Franco, _Thuja plicata_ Donn ex D. Don, and _Tsuga heterophylla_ (Raf.) Sarg. counts to calculate native conifer density. 
 
-After recording broad ground cover material types on paper maps, I hand digitized them in QGIS to calculate area [@QGIS]. Pervious cover types recorded include dense vegetation, dirt/litter, lawn (turf grass including moss and forb species), gravel, dense ivy, mulch, and water. I used semi-structured interviews of property owners, managers, and landscaping services along with site visits to obtain maintenance regime variables [University of Washington Human Subjects Division Determination of Exemption #48246; @dexter1970; @harvey2011].
+I digitized broad ground cover material classes in QGIS to calculate area [@QGIS].
+Pervious cover types recorded include dense vegetation, dirt/litter, lawn (turf grass including moss and forb species), gravel, dense ivy, mulch, and water. 
+I used semi-structured interviews of property owners, managers, and landscaping services along with site visits to obtain maintenance regime variables [University of Washington Human Subjects Division Determination of Exemption #48246; @dexter1970; @harvey2011].
 Irrigation, mulching, herbicide, and fertilizer application had only three "no" responses and thus could not be used to draw any well supported conclusions.
 
 
 
 ```{r TAB-covariate-definitions}
-
-
 
 covariate.definitions <- tibble(
 `Variable Name` = c(
@@ -488,17 +500,16 @@ knitr::kable(covariate.definitions,
 ```
 
 
-(ref:definition) Definition of independent variables used in PERMANOVA and correlation analysis [@taxDB; @KCDB; @ACS5yr; @xian2011; @homer2015]. Summary statistics for independent variables for both the population of office developments in Redmond and Bellevue and the sample of sites studied (`r sum(!(population.covariates$vegetation_class %in% c("WW", "XX", "LP"))) ` and 20 sites, respectively). Median income ($) and proportion foreign born are included to compare patterns in commercial developments with patterns found significant in residential research.
+(ref:definition) **Definition of independent variables used in PERMANOVA and correlation analysis [@taxDB; @KCDB; @ACS5yr; @xian2011; @homer2015].** Summary statistics for independent variables for both the population of office developments in Redmond and Bellevue and the sample of sites studied (`r sum(!(population.covariates$vegetation_class %in% c("WW", "XX", "LP"))) ` and 20 sites, respectively). Median income ($) and proportion foreign born are included to compare patterns in commercial developments with patterns found significant in residential research.
 
 
 ## Vegetation data collection
 
-I censused vegetation communities during the summer of 2015, excluding saplings with DBH < 3".
+I censused vegetation communities during the summer of 2015, excluding saplings with DBH < 3''.
 Each tree and shrub was identified to species or genus in consultation with experts at the Center for Urban Horticulture at University of Washington [@sibley2009; @dirr1997hardy; @dirr2009manual].
 Some tree and shrub species were grouped at the genus level due to the abundance of very similar cultivars in the landscaping trade, including _Malus_ Mill. [@sierra2017]. 
-All cultivars 
-Following @daniels2006yds, I grouped conifers under 2 m into a broad class of dwarf conifer species. 
-`r sum(matrify.tree.sp.only[ , colnames(matrify.tree.sp.only) %in% c("cedar.1", "cedar.2", "unknown.broadleaf.1", "unknown.broadleaf.2", "unknown.broadleaf.3", "unknown.broadleaf.4", "unknown.broadleaf.5", "unknown.broadleaf.6")]) ` individual trees (`r 100*(sum(matrify.tree.sp.only[ , colnames(matrify.tree.sp.only) %in% c("cedar.1", "cedar.2", "unknown.broadleaf.1", "unknown.broadleaf.2", "unknown.broadleaf.3", "unknown.broadleaf.4", "unknown.broadleaf.5", "unknown.broadleaf.6")])/sum(matrify.tree.sp.only)) `%) and `r sum(matrify.shrub.site[ , 71:79]) ` shrubs (`r 100*(sum(matrify.shrub.site[ , 71:79])/sum(matrify.shrub.site) ) `%) could not be identified; these were given a unique identifier code for multivariate community analysis.
+Following previous studies, I grouped conifers under 2 m into a broad class of dwarf conifer species [@daniels2006yds]. 
+`r sum(matrify.tree.sp.only[ grepl("cedar.1|cedar.2|unknown", colnames(matrify.tree.sp.only))]) ` individual trees (`r 100*sum(matrify.tree.sp.only[ grepl("cedar.1|cedar.2|unknown", colnames(matrify.tree.sp.only))])/sum(matrify.tree.sp.only) `%) and `r sum(matrify.shrub.site[grepl("Unknown", colnames(matrify.shrub.site))]) ` shrubs (`r 100*(sum(matrify.shrub.site[grepl("Unknown", colnames(matrify.shrub.site))])/sum(matrify.shrub.site) ) `%) could not be identified; these were given a unique identifier code for multivariate community analysis.
 
 I assigned tree and shrub genera to one of three provenance categories---native, non-native, or ambiguous [@USGSplants; @USDAplants].
 The ambiguous category was used for genera including both native and non-native cultivated species that are difficult to distinguish, and/or frequently interbred and sold as crosses.
@@ -509,28 +520,23 @@ For example, some _Mahonia_ Nutt. sp. are native (_M. aquifolium_ Pursh Nutt. an
 
 Prior to flexible beta clustering and PERMANOVA analysis I standardized tree and shrub abundance data and ground cover area by total site area in acres.
 This transformation preserves parcel boundaries as the unit of analysis and reflects developer and landowner actions during and following development that determine the amount of impervious surface and pervious area, the number of trees preserved, and the number of trees and shrubs planted.
-Between site standardization (e.g. Wisconsin standardization) was not needed as the vegetation on all sites was completely censused. 
 
 To delineate vegetation community clusters on office developments, I used the agnes {vegan} function with beta = -0.5 to produce an ecologically interpretable dendrogram with minimal chaining [@mccune2002; @dufrene1997; @milligan1989; @breckenridge2000; @vegan]. 
-For the resulting groups, I performed indicator species analysis, which assesses the predictive values of species as indicators of the conditions at site groups, using multipatt {indicspecies} [@decaceres2010; @indicspecies; @decaceres2013]. 
-I ran the permutation-based function 100 times and took the mean of the indicator statistics generated for each species [@dysoncode]. 
-I used proportions to extrapolate group membership as determined by flexible beta clustering to the entire population of office developments in the study area based on corresponding pre-assigned vegetation type.
-I modeled total tree abundance per site for the entire population using the observed mean and standard deviations for tree abundance for each of these five vegetation types.
+I extrapolated cluster membership to the entire population of office developments in the study area using proportions.
+For the resulting groups, I performed indicator species analysis, which assesses the predictive values of species as indicators of the conditions at site groups, using multipatt {indicspecies} [@decaceres2010; @indicspecies; @decaceres2013] and a custom wrapper for repetition of the permutation based function [@dysoncode]. 
 
-After identifying vegetation community clusters, I used simple univariate PERMANOVA models to test if continuous variables differed between groups and Pearson's Chi-squared test to test if categorical variables differed [adonis2 {vegan} and chisq.test {stats}; @vegan]. 
-PERMANOVA is a permutation based implementation of ANOVA/MANOVA that avoids assumptions about underlying distributions of community structure and can be used with non-Euclidian distance matrices [@anderson2001]. 
+After identifying vegetation community clusters, I used simple univariate PERMANOVA models to test if continuous variables differed between groups and Pearson's Chi-squared test to test if categorical variables differed [adonis2 {vegan} and chisq.test {stats}; @anderson2001; @vegan]. 
 Bartlett tests of homogeneity found no difference between group variances (bartlett.test {stats}).
 
 
 ## Explaining variation in tree and shrub community structure
 
-I analyzed the tree and shrub communities separately to detect if they responded differently to socio-economic gradients or development and landscaping outcomes. 
-Additionally, the development and landscaping outcome variables are derived from measurements of the tree community.
-To avoid regressing the tree community against a measure of itself, I used non-metric multidimensional scaling (NMDS) to evaluate relationship between these variables and the tree community, and PERMANOVA for all other tests.
+I analyzed the tree and shrub communities separately. 
+This was in part to determine if the two communities responded differently, but also because the development and landscaping outcome variables are derived from measurements of the tree community.
 
-NMDS is a rank-based ordination technique that is robust to data without identifiable distribution, can be used with any distance or dissimilarity measure; here I used Bray-Curtis [@mccune2002]. 
-I used 100 repetitions of the metaMDS {vegan} implementation to find a stable minima [@vegan; @mccune2002]. To determine the relationship between development and landscaping outcome variables and the tree community, I used convex hull plots and fitted environmental vectors [ordiplot and envfit {vegan}; @vegan].
+I used non-metric multidimensional scaling (NMDS) to evaluate relationship between development and landscaping variables and the tree community [metaMDS {vegan}; @mccune2002; @vegan]. To determine the relationship between development and landscaping outcome variables and the tree community, I used convex hull plots and fitted environmental vectors [ordiplot and envfit {vegan}; @vegan].
 
+I used PERMANOVA for all other tests. 
 I used a multi-step approach to avoid transforming independent variables or using ordination to collapse related variables, as these actions make results less interpretable for urban planners and other professionals.
 I first tested each independent variable in a simple multivariate PERMANOVA model.
 To ensure differences in categorical variables were due to location and not dispersion, I used ANOVA to test for significant differences in dispersion [anova {stats} and betadisper {vegan}; @vegan].
@@ -538,17 +544,11 @@ I then constructed models using all variables with significant pseudo-_F_ values
 I used a custom AICc function based on residual sums of squares to compare models and identify those with the best support [@dysoncode].
 
 
-
-# Results and Discussion {#CH2-results}
-
-Woody vegetation communities on office developments in Redmond and Bellevue, Washington are heterogenous (Table \@ref(tab:TAB-site-summary-tables-veg)). 
-Cluster analysis identified distinct "Native" and "Ornamental" community types for both trees and shrubs; extrapolating these to the population level suggests that sites dominated by native vegetation are less frequent.
-I found that development and landscaping actions explain this variability better than aggregated and parcel scale socio-economic variables, in contrast with residential property [@hope2003; @luck2009; @clarke2013]. 
-These findings have implications for urban conservation and public policy, as well as future urban ecology research.
+# Results and Discussion
 
 ## Observed woody vegetation communities
 
-I recorded a total of `r sum(matrify.tree.sp.only)` individual trees and  `r sum(matrify.shrub.site)` individual shrubs from `r length(unique(tree.native$tree.species)) ` and `r length(unique(shrub.native$shrub.species)) ` taxonomic groups respectively (Supplemental Tables 1 & 2). 
+I recorded a total of `r sum(matrify.tree.sp.only)` trees and  `r sum(matrify.shrub.site)` shrubs from `r length(unique(tree.native$tree.species)) ` and `r length(unique(shrub.native$shrub.species)) ` taxonomic groups respectively (Supplemental Tables 1 & 2). 
 Only _Rhododendron_ L. were found on all 20 sites surveyed. Four tree species and nine shrub species were found on more than half of all office developments, with `r sum(colSums(PA.tree.sp.only) == 1) ` tree species and `r sum(colSums(PA.shrub.site) == 1) ` shrub taxa found only on only one development. 
 
 Native tree species accounted for `r (100 * (sum(matrify.tree.sp.only.native) / sum(matrify.tree.sp.only)))%>%round(1) `% of total individuals observed, and three of the top five most abundant species. On average, native tree species accounted for `r (100 * mean(rowSums(matrify.tree.sp.only.native) / rowSums(matrify.tree.sp.only)))%>%round(1) `% of the trees found on each office development, though sites varied widely with 0%--99% native tree stems.
@@ -580,9 +580,16 @@ shrub.z.beta <- betadiver(matrify.shrub.site, "z")%>%round(3)
 beta.tibble <- tibble(Metric = c("Tree Sorensen", "Tree Arrhenius Model z", "Shrub Sorensen", "Shrub Arrhenius Model z"),
                       Minimum = c(min(tree.sorensen), min(tree.z.beta), min(shrub.sorensen), min(shrub.z.beta)),
                       Maximum = c(max(tree.sorensen), max(tree.z.beta), max(shrub.sorensen), max(shrub.z.beta)),
-                      Mean = c(mean(tree.sorensen), mean(tree.z.beta), mean(shrub.sorensen), mean(shrub.z.beta)),
-                      `S.D.` = c(sd(tree.sorensen), sd(tree.z.beta), sd(shrub.sorensen), sd(shrub.z.beta)),
-                      Median = c(median(tree.sorensen), median(tree.z.beta), median(shrub.sorensen), median(shrub.z.beta)))
+                      Mean = c(mean(tree.sorensen)%>%round(3),
+                               mean(tree.z.beta)%>%round(3),
+                               mean(shrub.sorensen)%>%round(3),
+                               mean(shrub.z.beta)%>%round(3)),
+                      `S.D.` = c(sd(tree.sorensen)%>%round(3),
+                                 sd(tree.z.beta)%>%round(3),
+                                 sd(shrub.sorensen)%>%round(3),
+                                 sd(shrub.z.beta)%>%round(3)),
+                      Median = c(median(tree.sorensen), median(tree.z.beta),
+                                 median(shrub.sorensen), median(shrub.z.beta)))
 
 ```
 
@@ -627,7 +634,7 @@ diver.metrics.display <- c("Tree Abundance",
                            "Native Shrub Effective Species Richness")
     
 
-knitr::kable(diver.metrics[ diver.metrics$Metric %in% diver.metrics.display , ],
+knitr::kable(diver.metrics[ diver.metrics$Metric %in% diver.metrics.display , c(1:3,6,4,5)],
                row.names = FALSE,
                caption = "Metrics for tree and shrub communities on sampled office developments. H' is Shannon's diversity index [@shannon1949], effective species richness = exp(H') [@jost2006], density = individuals per acre.",
                format = "pandoc", escape = TRUE,
@@ -639,17 +646,16 @@ knitr::kable(diver.metrics[ diver.metrics$Metric %in% diver.metrics.display , ],
 ```
 
 Overall, these measures are within the ranges reported by other urban ecology studies, though differences in methodology and particularly the use of small plots [e.g. @clarke2013] and remote sensing [e.g. @luck2009] in other studies and stratified sampling in this study make comparison more difficult.
-The most abundant tree species on office developments matched well with similar studies on residential properties in western Washington [@tenneson2013; @mills2016]. 
-The observed pattern of a few highly abundant species with a long tail of rare species is also consistent with other studies of urban land use [@thompson2004; @jim1993; @sierra2017].
+The most abundant tree species on office developments are similar to those on residential properties in western Washington [@tenneson2013; @mills2016]. 
 Measures of diversity were generally lower than residential property [@clarke2013; @martin2004]. 
-However, the number of species observed was comparable to other commercial land uses and in city parks [@clarke2013; @martin2004] though lower than residential land uses [@clarke2013; @sierra2017; @martin2004; @jim1993]. 
-Measures of beta diversity, suggesting low similarity between locations, was also consistent [@sierra2017].
-
+Species richness was comparable to other commercial land uses and city parks [@clarke2013; @martin2004] though lower than residential land uses [@clarke2013; @sierra2017; @martin2004; @jim1993]. 
+Measures of beta diversity, suggesting low similarity between locations, were also comparable [@sierra2017].
 
 
 ## Divergent vegetation groups found on office developments
 
-I identified two groups of tree and shrub vegetation (flexible beta = -0.5; agglomerative coefficients of `r beta.5.tree$ac ` and `r beta.5.shrub$ac ` respectively; Table \@ref(tab:TAB-groupabund)). Using indictor species analysis, I found the Native Tree group (11 sites) is characterized by _Thuja plicata_, _Acer macrophyllum_ Pursh, _Arbutus menziesii_ Pursh, and _Alnus rubra_ Bong, while the Ornamental Tree group (9 sites) is characterized by _Acer rubrum_ L. The Native Shrub group (11 sites) is characterized by _Gaultheria shallon_ Pursh, _Mahonia gp._ Nutt., _Symphoricarpos_ Duham., and _Ribes sanguineum_ Pursh, and the Ornamental Shrub group (9 sites) by _Thuja occidentalis_ L. 
+I identified two groups of tree and shrub vegetation (flexible beta = -0.5; agglomerative coefficients of `r beta.5.tree$ac%>%round(2) ` and `r beta.5.shrub$ac ` respectively; Table \@ref(tab:TAB-groupabund)). 
+Using indictor species analysis, I identified the Native Tree group (11 sites) as characterized by _Thuja plicata_, _Acer macrophyllum_ Pursh, _Arbutus menziesii_ Pursh, and _Alnus rubra_ Bong, while the Ornamental Tree group (9 sites) is characterized by _Acer rubrum_ L. The Native Shrub group (11 sites) is characterized by _Gaultheria shallon_ Pursh, _Mahonia gp._ Nutt., _Symphoricarpos_ Duham., and _Ribes sanguineum_ Pursh, and the Ornamental Shrub group (9 sites) by _Thuja occidentalis_ L. 
 
 
 ```{r TAB-groupabund}
@@ -710,7 +716,7 @@ temp <- tibble(
     )
 
 knitr::kable(temp,
-             caption = "Rank abundance of tree and shrub taxa for each community group identified by flexible-beta analysis. Asterisk indicates native tree and shrub species.", 
+             caption = "Rank abundance of tree and shrub taxa for each community group identified by flexible-beta analysis. Asterisk indicates native tree and shrub species. Number in parenthesis is mean abundance of the species in the community group.", 
              row.names = FALSE,
              format = "pandoc", escape = TRUE, format.args = list(decimal.mark = '.', big.mark = ","))
 
@@ -767,14 +773,6 @@ tree.gc.mean <- merge(dens.matrify.gc, vegetation.clusters,
 ```
 
 
-The two groups are distinct in the average abundance of trees and shrubs per site 
-(Native Tree mean = `r tree.ml.mean[1,'tot.abund']%>%round(1) `,
-Ornamental Tree mean = `r tree.ml.mean[2,"tot.abund"]%>%round(1) `
-with Pr(>_F_) = `r count.tree[1,5]%>%round(3) `; 
-Native Shrub mean = `r shrub.ml.mean[2,"tot.abund"]%>%round(1) `,
-Ornamental Shrub mean = `r shrub.ml.mean[1,"tot.abund"]%>%round(1) `
-with Pr(>_F_) = `r count.shrub[1,5]%>%round(3) `
-). 
 The median height of dominant native conifers was also significantly different between Native and Ornamental clusters for trees and shrubs (tree mean values = `r tree.ml.mean[1,"height.m.median"]%>%round(1) ` m
 and `r tree.ml.mean[2,"height.m.median"]%>%round(1) ` m
 with Pr(>_F_) = `r mheight.tree[1,5]%>%round(4) `;
@@ -876,7 +874,7 @@ Further, when considering multiple competing options---such as different landsca
 That is, they search through alternatives until one meets an acceptability threshold, and that is the option chosen.
 
 
-```{r FIG-tree-management-NMDS, fig.cap = '(ref:NMDS)', fig.width=6.5, fig.height=5.5}
+```{r FIG-tree-management-NMDS, fig.cap = '(ref:NMDS)', dpi=300, fig.width=6.5, fig.height=5.5}
 
   spd.col <- ifelse(management.landscaping$stand.predate.development == "yes", "black", "gray70")
       
@@ -989,7 +987,7 @@ Researchers should choose their sampling strategy carefully based on research qu
 If the phenomena of interest is related to the vegetation community, researchers should attempt to better understand and sample the vegetation gradient (e.g. via stratified sampling) instead of sampling only along a measure of the built gradient [e.g. housing density; @lerman2011]. 
 
 
-```{r FIG-extrapolated-dist, fig.cap = '(ref:extrapolate)'}
+```{r FIG-extrapolated-dist, fig.cap = '(ref:extrapolate)', dpi=300}
 
 vc.mean <- mutate(sample.covariates,
                        tot.abund = rowSums(matrify.tree.sp.only)) %>%
@@ -1017,13 +1015,14 @@ ggplot(pop.tree.extrap, aes(jittered)) +
 
 (ref:extrapolate) Extrapolated distribution of the number of trees on office developments based on observed mean and standard deviations for each vegetation class used in sampling (HH, MC, MD, MM, LL). Note heavy right tail from HH and MC sites (kurtosis); each vegetation class also has a different variance (heteroscedasticity).
 
+
 Between land use differences in socio-economic variable importance suggests that creating vegetation models of land use within a city is likely inaccurate if all land uses are assumed to respond equivalently. 
 Researchers cannot assume that vegetation gradients and socio-economic gradients are parallel; these gradients may also interact resulting in heteroscedasticity.
 Decision pathways to support carbon sequestration and habitat models need to be constructed based on research for each land use separately.
 
 # Conclusion
 
-Humans control perennial vegetation communities in urban ecosystems, influencing ecosystem service provision and habitat quality and quantity. Commercial land uses, including office developments, have largely been overlooked in studies of urban woody vegetation composition and studies examining how these communities are assembled. I filled this gap by examining woody vegetation on office developments in Redmond and Bellevue, Washington, USA. 
+Humans control <woody> vegetation communities in urban ecosystems, influencing ecosystem service provision and habitat quality and quantity. Commercial land uses, including office developments, have largely been overlooked in studies of urban woody vegetation composition and studies examining how these communities are assembled. I filled this gap by examining woody vegetation on office developments in Redmond and Bellevue, Washington, USA. 
 
 I found that the vegetation communities on these developments are heterogenous, with distinct groups of sites characterized by Native and Ornamental Tree and Shrub vegetation communities. I also found that aggregated and parcel scale socioeconomic measures were less important in explaining variation in community composition than variables describing specific outcomes of decision makers' actions.  
 

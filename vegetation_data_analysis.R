@@ -770,6 +770,22 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
                 method = "eucl"
             )
         
+        # density
+        
+        dens.tree <-
+            adonis2(
+                rowSums(dens.matrify.tree.sp.only) ~ vegetation.clusters$tree.cluster.name,
+                permutations = 99999,
+                method = "eucl"
+            )
+        dens.shrub <-
+            adonis2(
+                rowSums(dens.matrify.shrub.site) ~ vegetation.clusters$shrub.cluster.name,
+                permutations = 99999,
+                method = "eucl"
+            )
+        
+        
         # median conifer height
         
         mheight.tree <-
