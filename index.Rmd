@@ -1,5 +1,5 @@
 ---
-title: Heterogeneity within and between land uses\: commercial office vegetation is determined by development and landscaping decisions
+title: Heterogeneity within and between land uses commercial office vegetation is determined by development and landscaping decisions
 bibliography: ../../../bibliography.bib
 output: 
     word_document:
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Load sourced R codes
 ## 
-all.current <- TRUE
+all.current <- FALSE
 
 if (all.current == TRUE) {
 
@@ -161,7 +161,7 @@ I found that woody vegetation communities on office developments are hetergenous
 
 Redmond (2017 population 64,000) and Bellevue (population 144,000) are located east of Seattle in King County, Washington [@Census2017]. Both cities share a similar ecological history, a similar disturbance timeline for logging and agriculture, and have grown considerably since the opening of the Evergreen Point Floating Bridge (SR 520) in 1963. They are at similar elevations (< 160 m) and experience the same climate and weather. 
 
-```{r FIG-study-area-map, fig.cap='(ref:studyareacap)', dpi=300}
+```{r FIG-study-area-map, fig.cap='(ref:studyareacap)'}
 
   knitr::include_graphics("Figure2_DPI_300.tif")
 
@@ -743,12 +743,14 @@ tree.ac.mean <- merge(sample.covariates, vegetation.clusters,
 shrub.ml.mean <- merge(vegetation.clusters, management.landscaping,
                      by.x = "SiteName", by.y= "Site",
                      sort = FALSE) %>%
-    mutate(tot.abund = rowSums(matrify.shrub.site)) %>%
+    mutate(tot.abund = rowSums(matrify.shrub.site), 
+           tot.density = rowSums(dens.matrify.shrub.site)) %>%
     group_by(shrub.cluster.name) %>%
     summarise_if(is.numeric, .funs = mean)
 
 tree.ml.mean <- mutate(management.landscaping,
-                       tot.abund = rowSums(matrify.tree.sp.only)) %>%
+                       tot.abund = rowSums(matrify.tree.sp.only),
+                       tot.density = rowSums(dens.matrify.tree.sp.only)) %>%
     group_by(tree.cluster.name) %>%
     summarise_if(is.numeric, .funs = mean)    
 
@@ -773,105 +775,82 @@ tree.gc.mean <- merge(dens.matrify.gc, vegetation.clusters,
 ```
 
 
-The median height of dominant native conifers was also significantly different between Native and Ornamental clusters for trees and shrubs (tree mean values = `r tree.ml.mean[1,"height.m.median"]%>%round(1) ` m
-and `r tree.ml.mean[2,"height.m.median"]%>%round(1) ` m
+The two groups are distinct in the average density of trees and shrubs per site 
+(Native Tree mean = `r tree.ml.mean[1,'tot.density']%>%round(1) `,
+Ornamental Tree mean = `r tree.ml.mean[2,"tot.density"]%>%round(1) `
+with Pr(>_F_) = `r dens.tree[1,5]%>%round(3) `; 
+Native Shrub mean = `r shrub.ml.mean[2,"tot.density"]%>%round(1) `,
+Ornamental Shrub mean = `r shrub.ml.mean[1,"tot.density"]%>%round(1) `
+with Pr(>_F_) = `r dens.shrub[1,5]%>%round(4) `
+). 
+The mean median height of dominant native conifers was also significantly different between clusters for trees and shrubs (Native Tree mean  = `r tree.ml.mean[1,"height.m.median"]%>%round(1) ` m,
+and Ornamental mean = `r tree.ml.mean[2,"height.m.median"]%>%round(1) ` m,
 with Pr(>_F_) = `r mheight.tree[1,5]%>%round(4) `;
-shrub mean values = `r shrub.ml.mean[2,"height.m.median"]%>%round(1) ` m
-and `r shrub.ml.mean[1,"height.m.median"]%>%round(1)` m
+Native Shrub mean = `r shrub.ml.mean[2,"height.m.median"]%>%round(1) ` m,
+and Ornamental mean = `r shrub.ml.mean[1,"height.m.median"]%>%round(1)` m,
 with Pr(>_F_) = `r mheight.shrub[1,5]%>%round(3)`).
 However, there was no difference in area between Native and Ornamental clusters for either trees or shrubs (
 tree Pr(>_F_) = `r area.tree[1,5]%>%round(3)`;
 shrub Pr(>_F_) = `r area.shrub[1,5]%>%round(3)`). 
+Dead wood abundance was significantly greater on Native Tree sites than Ornamental Tree sites 
+(Native Tree mean = `r tree.ml.mean[1,"dead.wood"]%>%round(1)`,
+and Ornamental mean = `r tree.ml.mean[2,"dead.wood"]%>%round(1)`,
+with Pr(>_F_) = `r dw.tree[1,5]%>%round(3)`),
+but not between shrub groups. 
 
-Of the associated ground cover only impervious surface cover between Native and Ornamental Tree sites differed significantly 
-(tree mean values = `r 100*tree.gc.mean[1, "impervious.sqft"]%>%round(1)`
-and `r 100*tree.gc.mean[2, "impervious.sqft"] %>%round(1)`
+Only impervious surface cover between Native and Ornamental Tree sites differed significantly 
+(Native Tree mean = `r 100*tree.gc.mean[1, "impervious.sqft"]%>%round(1)`,
+and Ornamental mean = `r 100*tree.gc.mean[2, "impervious.sqft"] %>%round(1)`,
 with Pr(>_F_) = `r imp.tree[1,5]%>%round(4)`).
 No other ground covers differed.
-Dead wood was significantly more abundant on Native Tree sites than Ornamental Tree sites 
-(mean value = `r tree.ml.mean[1,"dead.wood"]%>%round(1)`
-and `r tree.ml.mean[2,"dead.wood"]%>%round(1)`
-with Pr(>_F_) = `r dw.tree[1,5]%>%round(3)`),
-but not between shrub site groups. 
 
 There was also substantial co-occurance between Native and Ornamental groups. 
 Of the 20 office developments surveyed, nine sites belong to both Native Tree and Shrub community groups, and seven sites belong to both Ornamental Tree and Shrub community groups.
 This suggests that the sequential decisions made concerning tree preservation, tree plantings, and shrub plantings are related. 
 The observed differences in species composition, between group differences, and  high turnover (beta diversity) support the conclusion that woody vegetation communities on office developments are heterogenous.
 
-Native Tree and Shrub communities are more rare than Ornamental Tree and Shrub communities. Extrapolation suggests there are approximately 70 Native Tree and 335 Ornamental Tree developments (`r 7000/405 `%), and 152 Native Shrub and 253 Ornamental Shrub developments (`r 15200/405`%, Table \@ref(tab:TAB-confusion-matrix)). 
-Note the accuracy of these estimates will be influenced by the Medium vegetation type, as it is large and proportionally undersampled, and the relatively small sample size.
-
-
-
-```{r TAB-confusion-matrix, include=FALSE}
-
-t1 <- tibble(`Tree Cluster` = c("Native", "Ornamental"),
-          LL = c(1,4),
-          MM = c(0,3),
-          MD = c(2,2),
-          MC = c(3,0),
-          HH = c(5,0))
-
-
-t2 <- tibble(`Shrub Cluster` = c("Native", "Ornamental"),
-          LL = c(0,5),
-          MM = c(1,2),
-          MD = c(3,1),
-          MC = c(2,1),
-          HH = c(5,0))  
-
-knitr::kable(list(t1,t2),
-             caption = "Category overlap between visually estimated vegetation class and Native and Ornamental groups derived from flexible-beta clustering for trees and shrubs. LL = low vegetation; MM = medium vegetation; MD = medium w/diverse shrubs; MC = medium w/canopy cover; HH = high vegetation",
-             format = "pandoc", escape = TRUE, format.args = list(decimal.mark = '.', big.mark = ","))
-
-
-```
-
+Native Tree and Shrub communities are more rare than Ornamental Tree and Shrub communities. Extrapolation suggests there are approximately 70 Native Tree and 335 Ornamental Tree developments (`r 7000/405 `%), and 152 Native Shrub and 253 Ornamental Shrub developments (`r 15200/405`%). 
+The accuracy of these estimates is influenced by the Medium vegetation type, as it is large and proportionally undersampled, and the relatively small sample size.
 
 
 ## Socio-economic variables poorly explain variation in tree or shrub community composition
 
-Neither aggregated measures of residential socio-economic status nor parcel scale measures of economic value and the built environment adequately explain variation in tree and shrub community composition on office developments (Supplemental Table 3). 
-For the tree community, median household income is significant before, though not after, using the Holm-Bonferroni correction for multiple comparisons. 
-All other variables for both tree and shrub communities are not significant before or after correction.
+Neither aggregated measures of residential socio-economic status nor parcel scale measures of economic value and the built environment explained variation in tree and shrub community composition on office developments following Holm-Bonferroni correction (Supplemental Table 3). 
+For the tree community, median household income was significant only before correction.
+This largely supports my hypothesis that aggregated socio-economic variables specific to residential property are not important for commercial properties as well [@hope2003; @leong2018], though additional research is needed.
 
-Generally, this supports my hypothesis that aggregated socio-economic variables specific to residential property are not important for commercial properties as well [@hope2003; @leong2018]. 
-Additional research is needed to determine if there is a relationship between Median Income and the tree community or if it is an artifact of multiple comparisons.
-
-For aggregated socio-economic variables to be significant drivers of vegetation on office developments, the surrounding socio-economic context would need to influence developer and landowner choices of trees and shrubssuch as in areas where office developments are adjacent and visible to residential property. 
-However, zoning code in Bellevue and Redmond actively screens land uses from one another. 
-Instead, owners of office developments are likely signalling to prospective and existing tenants [@laverne2003; @levy2013], in contrast with owners of residential properties, who use vegetation choices to signal to their neighbors of similar socio-economic status [@nassauer2009; @cook2012; @peterson2012]. 
+Theoretically, one way for residential socio-economic variables to be significant drivers of vegetation on office developments is for the adjacent residential context to influence developer and commercial landowner vegetation choices.
+Generally, zoning code in Bellevue and Redmond actively screens land uses from one another. 
+Owners of office developments are likely signalling to prospective and existing tenants [@laverne2003; @levy2013], in contrast with owners of residential properties, who use vegetation choices to signal to their neighbors of similar socio-economic status [@nassauer2009; @cook2012; @peterson2012]. 
+Other paths include proximity to desireable amenities--that is, both residential and commercial properties near amenities are appealing to more wealthy neighbors/tenants, the influence of city design review boards, or neighborhood overlay districts.
 
 Studies examining why decision makers on commercial property make planting decisions are fewer in number than residential homeowners, though existing studies provide important early insight. 
-For example, in Toronto factors like site aspect, appearance, and available space rated more highly in species selection than whether species are native or nearby canopy composition for landscape architects, however city staff tried to plant native species whenever possible [@conway2016].
+For example, in Toronto factors like site aspect, appearance, and available space rated more highly in species selection than whether species are native or nearby canopy composition for landscape architects [@conway2016].
 
-Parcel scale measures of economic value and the built environment are not significant, which fails to support my hypothesis. Previous research found that property value explained variation in the woody vegetation community [@mills2016]. 
+Parcel scale measures of economic value and the built environment were not significant, which fails to support my hypothesis. Previous research found that property value explained variation in the woody vegetation community [@mills2016]. 
 Similarly, site age was suggested as a determinant of woody vegetation community composition by studies on residential properties [@boone2010; @avolio2018], landscaping professionals I interviewed, and my examination of contemporaneous landscaping plans filed with the cities of Bellevue and Redmond. Landscaping professionals mentioned trends in plant popularity, including _Pieris japonica_ (Thunb.) D. Don ex G. Don in the late 1980s and increasing use of native plants like _Ribes sanguineum_ since 2000. 
 Alternative explainations for this finding include: building age is a poor measure for landscaping age due to replanting; an interaction between age and landscaping budget; or that a subset of office developments are planted with in vogue landscape plants, such as the common but undersampled Medium vegetation type. 
 
 Differences in study design may also be responsible for these divergent results. 
-Other studies use index response variables with univariate regression [@hope2003; @martin2004], measures dependent on effort [@karlik2001; @martin2004], and plot or transect designs which confound different actors and outcomes [@clarke2013; @bourne2013].
-
-
+Other studies use index response variables and univariate regression [@hope2003; @martin2004], measures dependent on effort [@karlik2001; @martin2004], and plot or transect designs which confound different actors and outcomes [@clarke2013; @bourne2013].
 
 
 ## Development and landscaping outcomes are related to tree and shrub community composition
 
-Multiple variables describing development and landscaping outcomes explain variation in tree and shrub community composition. For the tree community,  convex hulls and fitted environmental vectors found strong relationships with median dominant native conifer height (a proxy for stand age), native conifer density, the presence of stands predating development, and dead wood abundance (particularly stump abundance (Figure \@ref(fig:FIG-tree-management-NMDS)). 
+Multiple variables describing the outcome ofdevelopment and landscaping actions explain variation in tree and shrub community composition. For the tree community, NMDS with convex hulls and fitted environmental vectors found strong relationships with median dominant native conifer height, native conifer density, the presence of stands predating development, and dead wood abundance (particularly stump abundance, Fig \@ref(fig:FIG-tree-management-NMDS)). 
 These variables were also included in the best supported PERMANOVA models for the shrub community (Table \@ref(tab:TAB-shrub-model-comparison)). 
 
 Together, these results support my hypothesis that development and landscaping actions impact vegetation communities on office developments. 
-They agree with some residential researchers who found that homeowner attitudes and actions were more important than socio-economic descriptors [@shakeel2014].
-These results agree with clustering results and suggest that a suite of decisions are being made that results in either retaining more trees and planting native shrubs or retaining fewer trees and planting ornamental trees and shrubs.
+They also agree with some residential researchers who found that homeowner attitudes and actions were more important than socio-economic descriptors [@shakeel2014].
+Together with flexible beta clustering results, theis suggests that a suite of decisions are being made that results in either retaining more trees and planting native shrubs or retaining fewer trees and planting ornamental trees and shrubs.
 
 However, development and landscaping outcomes are the end point of economic decision making processes poorly studied in urban ecology.
 Though the coarse socio-economic variables examined here were not significant, developer and landowner motivations and decision making were not considered explicitly, only their outcomes. 
 To reach these end points, developers may consider ease of construction based on site conditions, relative cost of different construction approaches, preferences of the landowner and customer specifications, previous company experience or company aesthetic, and development regulations [which impose costs on developers; @conway2016; @grimes2015; @hakkinen2011; @nappi2006; @dorney1984].
-As mentioned, the intended audience of prospective and existing tenants may influence both development and landscaping decisions [@laverne2003; @levy2013].
+The intended audience of prospective and existing tenants may influence both development and landscaping decisions [@laverne2003; @levy2013].
 These considerations may influence financing available to developers, financial risk, and the appeal of and thus demand for the completed project [@laverne2003].
 Further, when considering multiple competing options---such as different landscaping choices---developers and landowners may satisfice [@mohamed2009].
-That is, they search through alternatives until one meets an acceptability threshold, and that is the option chosen.
+That is, they search through alternatives until one meets an acceptability threshold and choose that option.
 
 
 ```{r FIG-tree-management-NMDS, fig.cap = '(ref:NMDS)', dpi=300, fig.width=6.5, fig.height=5.5}
@@ -957,7 +936,7 @@ temp <- temp[ order(temp$`Pseudo-F`, decreasing = T), ]
 
 knitr::kable(temp,
        digits = c(1,3,5,2,2),
-       caption = "PERMANOVA model summary comparing multivariate models of shrub community composition. Note that none of the models explain more than 25% of the variation in shrub community composition.",
+       caption = "PERMANOVA model summary comparing multivariate models of shrub community composition.",
              format = "pandoc", escape = TRUE,
        format.args = list(decimal.mark = '.', big.mark = ","))
 
@@ -966,10 +945,9 @@ knitr::kable(temp,
 
 ## Implications for urban habitat quality and quantity
 
-The variation in woody vegetation communities I observed on office developments suggests that better habitat conservation during and following development is possible using currently existing developements as models. 
-
-As local biological communities are largely determined by this vegetation, sites with more trees preserved and a greater abundance of native conifers likely provide higher habitat quality and quantity to other organisms [@wittig2010; @mckinney2002; @faeth2011; @avolio2018; @faeth2005] as native vegetation is more likely to support native insects and native birds than ornamental plantings [@belaire2014; @chong2014; @pennington2011; @paker2014; @narango2018; @burghardt2009; @dysonPhD].
-One estimate suggests native vegetation volume must be above 70% in order to maintain populations of native insectivorous bird species [@narango2018]; sites with high numbers of trees preserve likely already hit this target.
+The woody vegetation communities I observed on office developments suggest that integrating habitat conservation during and following development is possible using currently existing developements as models. 
+As local biological communities are largely determined by vegetation, sites with more trees preserved and a greater abundance of native conifers likely provide higher habitat quality and quantity to other organisms [@wittig2010; @mckinney2002; @faeth2011; @avolio2018; @faeth2005] as native vegetation is more likely to support native insects and native birds than ornamental plantings [@belaire2014; @chong2014; @pennington2011; @paker2014; @narango2018; @burghardt2009; @dysonPhD].
+One estimate suggests native vegetation volume must be above 70% in order to maintain populations of native insectivorous bird species [@narango2018]; sites with high numbers of trees preserved may already hit this target.
 
 We can point to actions and policies more likely to support high quality habitat and benefit other trophic levels, including tree preservation policies, promoting native tree and shrub planting, and removing policy barriers to native vegetation [@dysonPhD; @threlfall2016; @leroux2014]. 
 However, the motivations driving exemplary adoption of these actions are currently opaque. 
@@ -978,7 +956,7 @@ Anecdotes shared during fieldwork suggest owner-occupied office space, cost, and
 ## Implications for future urban ecology research
 
 Observed within land use heterogeneity and between land use differences in socio-economic variable importance both have implications for urban ecology research. 
-Within land use heterogeneity I observed results in vegetation distributions that are non-normal, with likely kurtosis and heteroscedasticity (Figure \@ref(fig:FIG-extrapolated-dist)). 
+Within land use heterogeneity results in vegetation distributions that are non-normal, with likely kurtosis and heteroscedasticity (e.g. Figure \@ref(fig:FIG-extrapolated-dist)). 
 In this system and others like it, the choice of sampling design and statistical method can result in inaccurate conclusions, particularly in conjunction with small sample size [@mcintyre2000urban]. 
 Additionally, potential sollutions already extant on the landscape may be overlooked.
 This provides support for stratified sampling designs, larger sample sizes, and chosing analysis methods robust to broken assumptions of normality of the sampled populaion [e.g. @dewinter2013]. 
@@ -990,10 +968,12 @@ If the phenomena of interest is related to the vegetation community, researchers
 ```{r FIG-extrapolated-dist, fig.cap = '(ref:extrapolate)', dpi=300}
 
 vc.mean <- mutate(sample.covariates,
-                       tot.abund = rowSums(matrify.tree.sp.only)) %>%
+                       tot.abund = rowSums(matrify.tree.sp.only),
+                       tot.density = rowSums(dens.matrify.tree.sp.only)) %>%
     group_by(vegetation_class) %>%
     summarise_at(.vars = c("tot.abund"),
-                 .funs = funs(treeab.mean = mean, treeab.sd = sd))
+                 .funs = funs(treeab.mean = mean, 
+                              treeab.sd = sd))
 
 pop.tree.extrap <- merge(population.covariates, vc.mean, 
                          by = "vegetation_class", sort = F)
@@ -1015,33 +995,30 @@ ggplot(pop.tree.extrap, aes(jittered)) +
 
 (ref:extrapolate) Extrapolated distribution of the number of trees on office developments based on observed mean and standard deviations for each vegetation class used in sampling (HH, MC, MD, MM, LL). Note heavy right tail from HH and MC sites (kurtosis); each vegetation class also has a different variance (heteroscedasticity).
 
-
 Between land use differences in socio-economic variable importance suggests that creating vegetation models of land use within a city is likely inaccurate if all land uses are assumed to respond equivalently. 
 Researchers cannot assume that vegetation gradients and socio-economic gradients are parallel; these gradients may also interact resulting in heteroscedasticity.
 Decision pathways to support carbon sequestration and habitat models need to be constructed based on research for each land use separately.
 
 # Conclusion
 
-Humans control <woody> vegetation communities in urban ecosystems, influencing ecosystem service provision and habitat quality and quantity. Commercial land uses, including office developments, have largely been overlooked in studies of urban woody vegetation composition and studies examining how these communities are assembled. I filled this gap by examining woody vegetation on office developments in Redmond and Bellevue, Washington, USA. 
+Humans control woody vegetation communities in urban ecosystems, influencing ecosystem service provision and habitat quality and quantity. Commercial land uses, including office developments, have largely been overlooked in studies of urban woody vegetation composition and studies examining how these communities are assembled.
+I filled this gap by examining tree and shrub communities on office developments in Redmond and Bellevue, Washington, USA. 
 
-I found that the vegetation communities on these developments are heterogenous, with distinct groups of sites characterized by Native and Ornamental Tree and Shrub vegetation communities. I also found that aggregated and parcel scale socioeconomic measures were less important in explaining variation in community composition than variables describing specific outcomes of decision makers' actions.  
+I found that the vegetation communities on these developments are heterogenous, with distinct groups of sites characterized by Native and Ornamental Tree and Shrub vegetation communities. 
+I also found that aggregated and parcel scale socioeconomic measures were less important in explaining variation in community composition than variables describing the outcomes of development and landscaping choices.
 
-This research contributes to our understanding of vegetation communities outside of municipal parks and residential land uses. It is also one of few studies that uses site surveys where the unit of measurement is based on how management decisions are made, instead of methods derived from wildlands vegetation research [e.g. transects and plots; @clarke2013; @bourne2013] or remote-sensing [e.g. @luck2009]. 
+This research contributes to our understanding of vegetation communities outside of municipal parks and residential land uses. 
+It is also one of few studies that uses site surveys where the unit of measurement is based on how management decisions are made, instead of methods derived from wildlands vegetation research [e.g. transects and plots; @clarke2013; @bourne2013] or remote-sensing [e.g. @luck2009]. 
 
-The observed heterogeneity in vegetation communities suggests that different ecosystem functions and habitat quantity and quality are provided on office developments; better provision of these functions is possible using currently existing developments as models. Further, the heterogeneity and observed differences in variable importance between office developments and residential land uses suggests that future urban ecology research must more carefully consider sampling design and that models of the urban ecosystem must account for different decision pathways on land uses.
+The observed heterogeneity in vegetation communities suggests that different ecosystem functions and habitat quantity and quality are provided on office developments.
+Greater provision of these functions is possible using currently existing developments as models. Further, the heterogeneity and observed differences in variable importance between office developments and residential land uses suggests that future urban ecology research must more carefully consider sampling design and that models of the urban ecosystem must account for different decision pathways on land uses.
 
-Going forward, research should examine other commercial land uses, commercial land use in additional ecotypes, and particularly decision pathways followed by actors on commercial land uses.
-This research agrees with @shakeel2014 that specific actions are more important than aggregated socio-economic variables.
-Additional research is needed to link decision makers' personal values and aesthetic preferences, economic motivations, and social norms with tree and shrub community composition on commercial land following work on residential property by @cook2012 and @shakeel2014.
+Going forward, research should examine other commercial land uses, commercial land use in additional ecotypes, and particularly the decision pathways followed by actors on commercial and other land uses.
+This research agrees with other studies suggesting that specific actions are more important than aggregated socio-economic variables [@shakeel2014].
+Additional research is needed to link decision makers' personal values and aesthetic preferences, economic motivations, and social norms with tree and shrub community composition on commercial land following work on residential property [ @cook2012; @shakeel2014].
 Needed studies include interviews to better understand tree preservation and planting motivations [@hakkinen2011; @conway2016]; aesthetic preference studies as on residential developments [@larson2009; @harris2012]; and tracing decision making pathways based on previous land use [@yang2017].
 A better understanding of these processes may improve habitat quality and quantity on commercial property [@uren2015]. 
 Finally, research is also needed to determine if vegetation inequity observed on residential properties [@heynen2006] is perpetuated on commercial properties; the No Vegetation type excluded from analysis here was often adjacent to retail use, where worker compensation is generally less than in medical/dental, software, and other white collar jobs in office developments.
-
-
-
-
-Important interactions may exist between land use and drivers of human decisions/management that impacts vegetation communities on different land uses.
-
 
 
 

@@ -655,19 +655,39 @@ options(tibble.width = Inf)
 
 ## -- WRITE ---------------------------------------------------------------------
 
+        sample.covariates <- sample.covariates[ order(sample.covariates$SiteName), ]
+        
+        matrify.tree.sp.only <- matrify.tree.sp.only[ order(rownames(matrify.tree.sp.only)), ]
+        matrify.tree.sp.size <- matrify.tree.sp.size[ order(rownames(matrify.tree.sp.size)), ]
+        dens.matrify.tree.sp.only <- dens.matrify.tree.sp.only[ order(rownames(dens.matrify.tree.sp.only)), ]
+        
+        matrify.gc <- matrify.gc[ order(rownames(matrify.gc)), ]
+        dens.matrify.gc <- dens.matrify.gc[ order(rownames(dens.matrify.gc)), ]
+        
+        matrify.shrub.site <- matrify.shrub.site[ order(rownames(matrify.shrub.site)), ]
+        dens.matrify.shrub.site <- dens.matrify.shrub.site[ order(rownames(dens.matrify.shrub.site)), ]
+        
     ## Optional: export matrified shrub and trees data; sample site covariates.
 
     if (write.all == TRUE) {
 
-
         write.csv(matrify.tree.sp.only, file = "matrify_tree_species.csv")
         write.csv(matrify.tree.sp.size, file = "matrify_tree_species_size.csv")
+        write.csv(dens.matrify.tree.sp.only, file = "dens_matrify_tree_species.csv")
 
         write.csv(matrify.shrub.site, file = "matrify_shrub_bysite_comb.csv")
         write.csv(matrify.shrub.zones, file = "matrify_shrub_byzone_comb.csv")
+        write.csv(dens.matrify.shrub.site, file = "dens_matrify_shrub_bysite_comb.csv")
 
         write.csv(matrify.gc, file = "matrify_gc.csv")
+        write.csv(dens.matrify.gc, file = "dens_matrify_gc.csv")
+        
         write.csv(DF.site.measures, file = "DF_site_measures.csv")
+        write.csv(management.landscaping, file = "management_landscaping.csv")
+        
+        write.csv(sample.covariates, "sample_covariates.csv")
+        write.csv(shrub.native, "shrub_native_updated.csv")
+        write.csv(tree.native, "tree_native_updated.csv")
 
     }
 

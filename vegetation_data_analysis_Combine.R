@@ -779,6 +779,20 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
                 method = "eucl"
             )
         
+        # density
+        dens.tree <-
+            adonis2(
+                rowSums(dens.matrify.tree.sp.only) ~ vegetation.clusters$tree.cluster.name,
+                permutations = 99999,
+                method = "eucl"
+            )
+        dens.shrub <-
+            adonis2(
+                rowSums(dens.matrify.shrub.site) ~ vegetation.clusters$shrub.cluster.name,
+                permutations = 99999,
+                method = "eucl"
+            )
+        
         # median conifer height
         
         mheight.tree <-
@@ -875,6 +889,32 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
                                  vegetation.clusters$shrub.cluster.name)
         
 
+        
+            adonis2(
+                rowSums(matrify.tree.sp.only) ~
+                    sample.covariates$MedianHouseholdIncome_B19013e1,
+                permutations = 99999,
+                method = "eucl"
+            )
+            
+            adonis2(
+                dens.matrify.tree.sp.only ~
+                    management.landscaping$height.m.median,
+                permutations = 99999,
+                method = "bray"
+            )
+        
+        for (i in 1:20){
+            x <- adonis2(
+                matrify.tree.sp.only[-i,] ~
+                    sample.covariates$MedianHouseholdIncome_B19013e1[-i],
+                permutations = 99999,
+                method = "bray"
+            )    
+            print(x)
+        }
+            
+            
 ## -- NMDS --------------------------------------------------------------------------
 
     # Tree density NMDS:
