@@ -3,3 +3,7 @@
 .Rproj.user/
 *.docx
 *.ini
+.Rhistory
+Old/
+*.pdf
+veg_anon.R

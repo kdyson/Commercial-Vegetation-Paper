@@ -124,7 +124,7 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
 
 
         temp <- summarise_all(descriptive.stats.site[ , -1],
-                              funs(min, max, mean, sd, median)) %>%
+                              list(min, max, mean, sd, median)) %>%
             round(1)
         pretty.descriptive.stats.site <- tibble(
                     Metric = colnames(descriptive.stats.site)[-1],
@@ -295,7 +295,7 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
                                   sample.parc500m.imp = dissolved_parcel_500m_buffer_impervious_500m_mean,
                                   sample.medincome = MedianHouseholdIncome_B19013e1,
                                   sample.propimmig = Proportion_ForeignBorn_B99051e5) %>%
-                summarise_all(funs(min, max, mean, sd, median)) %>%
+                summarise_all(list(min, max, mean, sd, median)) %>%
                 round(2)
 
             descriptive.sample.cov <- tibble(
@@ -319,12 +319,12 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
                 popn.medincome = MedianHouseholdIncome_B19013e1,
                 popn.propimmig = Proportion_ForeignBorn_B99051e5
             ) %>%
-                summarise_all(funs(
-                    min(., na.rm = TRUE),
-                    max(., na.rm = TRUE),
-                    mean(., na.rm = TRUE),
-                    sd(., na.rm = TRUE),
-                    median(., na.rm = TRUE)
+                summarise_all(list(
+                    ~min(., na.rm = TRUE),
+                    ~max(., na.rm = TRUE),
+                    ~mean(., na.rm = TRUE),
+                    ~sd(., na.rm = TRUE),
+                    ~median(., na.rm = TRUE)
                 )) %>%
                 round(2)
             
@@ -686,7 +686,7 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
         t.test(temp[temp$group == 1, "imp"], temp[temp$group == 2, "imp"])
         
         means <-
-            temp %>% group_by(group) %>% summarise_at(vars(imp), funs(mean, sd))
+            temp %>% group_by(group) %>% summarise_at(vars(imp), list(mean, sd))
         group1 <- temp[temp$group == 1,]
         group2 <- temp[temp$group == 2,]
         
@@ -1366,7 +1366,9 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
             
         cluster.site.stats <- group_by(extrapolate.site.stats[ , 2:19], 
                                        tree.cluster.name) %>%
-                                summarise_all(funs(min, max, mean, sd, median)) 
+                                summarise_all(list(min = min, max = max,
+                                                   mean = mean, sd = sd,
+                                                   median = median)) 
         
         cluster.site.stats[2:86] <- round(cluster.site.stats[2:86] , 2)
 
@@ -1413,7 +1415,7 @@ management.landscaping$tree.conifer.nat.dens <- descriptive.stats.site$tree.coni
     
     vegclass.site.stats <-
         group_by(extrapolate.site.stats[, c(2, 4:5, 13, 21)], vegetation_class) %>%
-        summarise_all(funs(min, max, mean, sd, median))
+        summarise_all(list(min = min, max = max, mean = mean, sd = sd, median = median))
     
     pretty.vegclass.site.stats <- tibble(
         vegetation_class = vegclass.site.stats$vegetation_class,
