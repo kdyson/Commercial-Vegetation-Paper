@@ -1,2 +1,4 @@
 # CommercialVeg
-Data analysis and bookdown R code for creating the paper "Development and landscaping choices differentiate heterogenous tree and shrub communities on office developments" by K Dyson
+Data set, data analysis, and bookdown R code for creating the paper "Vegetation communities on commercial developments are heterogenous and determined by development and landscaping decisions, not socioeconomics" by K Dyson.
+
+Clone repository and compile index.Rmd using bookdown in RStudio.
